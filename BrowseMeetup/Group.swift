@@ -21,11 +21,6 @@ struct Group {
     }
     
     var timeInterval: String {
-        let date = Date(timeIntervalSince1970: created)
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .short
-        dateFormatter.timeStyle = .none
-        
-        return dateFormatter.string(from: date)
+        return DateFormatter.dateWithNoTimeFromTimeInterval(created)
     }
 }

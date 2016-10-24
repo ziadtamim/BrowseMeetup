@@ -10,7 +10,6 @@ import AsyncDisplayKit
 
 fileprivate let SmallFontSize: CGFloat = 12
 fileprivate let FontSize: CGFloat = 12
-fileprivate let LargeFontSize: CGFloat = 15
 fileprivate let OrganizerImageSize: CGFloat = 30
 fileprivate let HorizontalBuffer: CGFloat = 10
 

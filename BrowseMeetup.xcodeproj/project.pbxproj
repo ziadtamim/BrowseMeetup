@@ -22,6 +22,7 @@
 		E7B1F4431DBD7DC800F8D731 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B1F4421DBD7DC800F8D731 /* LocationService.swift */; };
 		E7B1F4451DBD7F7800F8D731 /* MeetupFeedInteractorIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B1F4441DBD7F7800F8D731 /* MeetupFeedInteractorIO.swift */; };
 		E7B1F4471DBD84EB00F8D731 /* ApplicationConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B1F4461DBD84EB00F8D731 /* ApplicationConfigurator.swift */; };
+		E7B1F4491DBD8C6E00F8D731 /* DateFormatter+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B1F4481DBD8C6E00F8D731 /* DateFormatter+Additions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		E7B1F4421DBD7DC800F8D731 /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		E7B1F4441DBD7F7800F8D731 /* MeetupFeedInteractorIO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetupFeedInteractorIO.swift; sourceTree = "<group>"; };
 		E7B1F4461DBD84EB00F8D731 /* ApplicationConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationConfigurator.swift; sourceTree = "<group>"; };
+		E7B1F4481DBD8C6E00F8D731 /* DateFormatter+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Additions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 				E757AE041DAFCC3E008979DF /* AppDelegate.swift */,
 				E7B1F4461DBD84EB00F8D731 /* ApplicationConfigurator.swift */,
 				E7B1F4351DBCE4CC00F8D731 /* NSAttributedString+Additions.swift */,
+				E7B1F4481DBD8C6E00F8D731 /* DateFormatter+Additions.swift */,
 				E7B1F4381DBD5D2F00F8D731 /* MeetupService.swift */,
 				E7B1F4421DBD7DC800F8D731 /* LocationService.swift */,
 				E7B1F4441DBD7F7800F8D731 /* MeetupFeedInteractorIO.swift */,
@@ -248,6 +251,7 @@
 				E7B1F4391DBD5D2F00F8D731 /* MeetupService.swift in Sources */,
 				E757AE051DAFCC3E008979DF /* AppDelegate.swift in Sources */,
 				E7B1F4431DBD7DC800F8D731 /* LocationService.swift in Sources */,
+				E7B1F4491DBD8C6E00F8D731 /* DateFormatter+Additions.swift in Sources */,
 				E7B1F4311DBCDB0F00F8D731 /* Organizer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
