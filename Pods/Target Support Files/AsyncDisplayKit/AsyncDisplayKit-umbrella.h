@@ -1,4 +1,6 @@
+#ifdef __OBJC__
 #import <UIKit/UIKit.h>
+#endif
 
 #import "_AS-objc-internal.h"
 #import "ASDealloc2MainObject.h"

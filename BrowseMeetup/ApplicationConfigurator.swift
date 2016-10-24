@@ -18,7 +18,6 @@ final class ApplicationConfigurator {
         window.rootViewController  = feedNavCtrl
         
         self.feedVC = feedVC
-        
         configure()
     }
     
@@ -28,10 +27,9 @@ final class ApplicationConfigurator {
         
         let dataManager = MeetupFeedDataManager(meetupService: meetupService, locationService: locationService)
         let interactor = MeetupFeedInteractor()
-        
-        feedVC?.handler = interactor
-        
         interactor.dataManager = dataManager
         interactor.output = feedVC
+        
+        feedVC?.handler = interactor
     }
 }

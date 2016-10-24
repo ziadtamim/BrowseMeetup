@@ -10,13 +10,18 @@ import AsyncDisplayKit
 
 final class MeetupFeedViewController: ASViewController<ASTableNode>,ASTableDelegate,ASTableViewDataSource,MeetupFeedInteractorOutput {
     
-    var _groups: [Group]?
+    var _activityIndicatorView: UIActivityIndicatorView!
     
+    var _groups: [Group]?
     var handler: MeetupFeedInteractorInput?
     
     var tableNode: ASTableNode {
         return node
     }
+    
+    ///--------------------------------------
+    // MARK - Life Cycle
+    ///--------------------------------------
     
     init() {
         super.init(node: ASTableNode())
@@ -29,15 +34,27 @@ final class MeetupFeedViewController: ASViewController<ASTableNode>,ASTableDeleg
     
     override func loadView() {
         super.loadView()
+        _activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        _activityIndicatorView.hidesWhenStopped = true
+        _activityIndicatorView.sizeToFit()
+        
+        let boundSize = self.view.bounds.size
+        var refreshRect = _activityIndicatorView.frame
+        refreshRect.origin = CGPoint(x: (boundSize.width - _activityIndicatorView.frame.width) / 2.0, y: _activityIndicatorView.frame.midY)
+        
+        _activityIndicatorView.frame = refreshRect
+        view.addSubview(_activityIndicatorView)
+        
+        tableNode.view.allowsSelection = false
+        tableNode.view.separatorStyle = UITableViewCellSeparatorStyle.none
+        
+        _activityIndicatorView.startAnimating()
         handler?.findGroupItemsNearby()
     }
     
-    func setupInitialState() {
-        title = "Browse Meetup"
-        
-        tableNode.dataSource = self
-        tableNode.delegate = self
-    }
+    ///--------------------------------------
+    // MARK - Interactor Output
+    ///--------------------------------------
     
     func foundGroupItems(_ groups: [Group]?, error: Error?) {
         guard error == nil else { return }
@@ -46,17 +63,9 @@ final class MeetupFeedViewController: ASViewController<ASTableNode>,ASTableDeleg
         insertNewRowsInTableView(newGroups: groups!)
     }
     
-    func insertNewRowsInTableView(newGroups: [Group]) {
-        let section = 0
-        var indexPaths = [IndexPath]()
-        
-        newGroups.enumerated().forEach { (row, group) in
-            let path = IndexPath(row: row, section: section)
-            indexPaths.append(path)
-        }
-        
-        tableNode.view.insertRows(at: indexPaths, with: .none)
-    }
+    ///--------------------------------------
+    // MARK - Table Data Source
+    ///--------------------------------------
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return _groups?.count ?? 0
@@ -71,5 +80,28 @@ final class MeetupFeedViewController: ASViewController<ASTableNode>,ASTableDeleg
         }
         return cellNodeBlock
     }
+    
+    ///--------------------------------------
+    // MARK - Helper Methods
+    ///--------------------------------------
 
+    func insertNewRowsInTableView(newGroups: [Group]) {
+        let section = 0
+        var indexPaths = [IndexPath]()
+        
+        newGroups.enumerated().forEach { (row, group) in
+            let path = IndexPath(row: row, section: section)
+            indexPaths.append(path)
+        }
+        
+        tableNode.view.insertRows(at: indexPaths, with: .none)
+        _activityIndicatorView.stopAnimating()
+    }
+    
+    func setupInitialState() {
+        title = "Browse Meetup"
+        
+        tableNode.dataSource = self
+        tableNode.delegate = self
+    }
 }
