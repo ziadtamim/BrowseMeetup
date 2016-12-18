@@ -12,7 +12,7 @@ import AsyncDisplayKit
 class MeetupFeedTableDataProvider: NSObject, ASTableDataSource {
     
     var _groups: [Group]?
-    weak var tableNode: ASTableNode?
+    weak var _tableNode: ASTableNode?
     
     ///--------------------------------------
     // MARK - Table data source
@@ -44,6 +44,6 @@ class MeetupFeedTableDataProvider: NSObject, ASTableDataSource {
             let path = IndexPath(row: row, section: section)
             indexPaths.append(path)
         }
-        tableNode?.insertRows(at: indexPaths, with: .none)
+        _tableNode?.insertRows(at: indexPaths, with: .none)
     }
 }

@@ -13,7 +13,7 @@ final class MeetupFeedViewController: ASViewController<ASTableNode>,MeetupFeedIn
     var _activityIndicatorView: UIActivityIndicatorView!
     var dataProvider: MeetupFeedTableDataProvider!
     var handler: MeetupFeedInteractorInput?
-    var tableNode: ASTableNode
+    var _tableNode: ASTableNode
     
     ///--------------------------------------
     // MARK - Life Cycle
@@ -21,8 +21,8 @@ final class MeetupFeedViewController: ASViewController<ASTableNode>,MeetupFeedIn
     
     init() {
         
-        tableNode = ASTableNode()
-        super.init(node: tableNode)
+        _tableNode = ASTableNode()
+        super.init(node: _tableNode)
         setupInitialState()
     }
     
@@ -43,8 +43,8 @@ final class MeetupFeedViewController: ASViewController<ASTableNode>,MeetupFeedIn
         _activityIndicatorView.frame = refreshRect
         view.addSubview(_activityIndicatorView)
         
-        tableNode.view.allowsSelection = false
-        tableNode.view.separatorStyle = UITableViewCellSeparatorStyle.none
+        _tableNode.view.allowsSelection = false
+        _tableNode.view.separatorStyle = UITableViewCellSeparatorStyle.none
         
         _activityIndicatorView.startAnimating()
         handler?.findGroupItemsNearby()
@@ -69,7 +69,7 @@ final class MeetupFeedViewController: ASViewController<ASTableNode>,MeetupFeedIn
         title = "Browse Meetup"
         
         dataProvider = MeetupFeedTableDataProvider()
-        dataProvider.tableNode = tableNode
-        tableNode.dataSource = dataProvider
+        dataProvider.tableNode = _tableNode
+        _tableNode.dataSource = dataProvider
     }
 }
