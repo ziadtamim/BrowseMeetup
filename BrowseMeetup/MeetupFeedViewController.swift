@@ -69,7 +69,7 @@ final class MeetupFeedViewController: ASViewController<ASTableNode>,MeetupFeedIn
         title = "Browse Meetup"
         
         dataProvider = MeetupFeedTableDataProvider()
-        dataProvider.tableNode = _tableNode
+        dataProvider._tableNode = _tableNode
         _tableNode.dataSource = dataProvider
     }
 }
