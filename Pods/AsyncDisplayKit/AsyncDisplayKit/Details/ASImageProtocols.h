@@ -55,7 +55,7 @@ typedef void(^ASImageCacherCompletion)(id <ASImageContainerProtocol> _Nullable i
                 completion:(ASImageCacherCompletion)completion;
 
 /**
- @abstract Called during clearFetchedData. Allows the cache to optionally trim items.
+ @abstract Called during clearPreloadedData. Allows the cache to optionally trim items.
  @note Depending on your caches implementation you may *not* wish to respond to this method. It is however useful
  if you have a memory and disk cache in which case you'll likely want to clear out the memory cache.
  */
@@ -210,31 +210,6 @@ withDownloadIdentifier:(id)downloadIdentifier;
  @abstract Clear any cached data. Called when playback is paused.
  */
 - (void)clearAnimatedImageCache;
-
-@end
-
-@protocol ASImageDownloaderProtocolDeprecated <ASImageDownloaderProtocol>
-
-@optional
-/**
- @deprecated This method is deprecated @see downloadImageWithURL:callbackQueue:downloadProgress:completion: instead
- */
-- (nullable id)downloadImageWithURL:(NSURL *)URL
-                      callbackQueue:(nullable dispatch_queue_t)callbackQueue
-              downloadProgressBlock:(void (^ _Nullable)(CGFloat progress))downloadProgressBlock
-                         completion:(void (^ _Nullable)(CGImageRef _Nullable image, NSError * _Nullable error))completion ASDISPLAYNODE_DEPRECATED;
-
-@end
-
-@protocol ASImageCacheProtocolDeprecated <ASImageCacheProtocol>
-
-@optional
-/**
- @deprecated This method is deprecated @see cachedImageWithURL:callbackQueue:completion: instead
- */
-- (void)fetchCachedImageWithURL:(nullable NSURL *)URL
-                  callbackQueue:(nullable dispatch_queue_t)callbackQueue
-                     completion:(void (^)(CGImageRef _Nullable imageFromCache))completion ASDISPLAYNODE_DEPRECATED;
 
 @end
 

@@ -9,6 +9,7 @@
 //
 
 #import "ASInternalHelpers.h"
+#import "ASRunLoopQueue.h"
 
 #import <objc/runtime.h>
 
@@ -17,6 +18,7 @@
 
 BOOL ASSubclassOverridesSelector(Class superclass, Class subclass, SEL selector)
 {
+  if (superclass == subclass) return NO; // Even if the class implements the selector, it doesn't override itself.
   Method superclassMethod = class_getInstanceMethod(superclass, selector);
   Method subclassMethod = class_getInstanceMethod(subclass, selector);
   IMP superclassIMP = superclassMethod ? method_getImplementation(superclassMethod) : NULL;
@@ -26,11 +28,31 @@ BOOL ASSubclassOverridesSelector(Class superclass, Class subclass, SEL selector)
 
 BOOL ASSubclassOverridesClassSelector(Class superclass, Class subclass, SEL selector)
 {
+  if (superclass == subclass) return NO; // Even if the class implements the selector, it doesn't override itself.
   Method superclassMethod = class_getClassMethod(superclass, selector);
   Method subclassMethod = class_getClassMethod(subclass, selector);
   IMP superclassIMP = superclassMethod ? method_getImplementation(superclassMethod) : NULL;
   IMP subclassIMP = subclassMethod ? method_getImplementation(subclassMethod) : NULL;
   return (superclassIMP != subclassIMP);
+}
+
+IMP ASReplaceMethodWithBlock(Class c, SEL origSEL, id block)
+{
+  NSCParameterAssert(block);
+  
+  // Get original method
+  Method origMethod = class_getInstanceMethod(c, origSEL);
+  NSCParameterAssert(origMethod);
+  
+  // Convert block to IMP trampoline and replace method implementation
+  IMP newIMP = imp_implementationWithBlock(block);
+  
+  // Try adding the method if not yet in the current class
+  if (!class_addMethod(c, origSEL, newIMP, method_getTypeEncoding(origMethod))) {
+    return method_setImplementation(origMethod, newIMP);
+  } else {
+    return method_getImplementation(origMethod);
+  }
 }
 
 void ASPerformBlockOnMainThread(void (^block)())
@@ -57,15 +79,51 @@ void ASPerformBlockOnBackgroundThread(void (^block)())
   }
 }
 
-void ASPerformBlockOnDeallocationQueue(void (^block)())
+void ASPerformBackgroundDeallocation(id object)
 {
-  static dispatch_queue_t queue;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    queue = dispatch_queue_create("org.AsyncDisplayKit.deallocationQueue", DISPATCH_QUEUE_SERIAL);
-  });
-  
-  dispatch_async(queue, block);
+  [[ASDeallocQueue sharedDeallocationQueue] releaseObjectInBackground:object];
+}
+
+BOOL ASClassRequiresMainThreadDeallocation(Class class)
+{
+  if (class == [UIImage class] || class == [UIColor class]) {
+    return NO;
+  }
+
+  if ([class isSubclassOfClass:[UIResponder class]]
+      || [class isSubclassOfClass:[CALayer class]]
+      || [class isSubclassOfClass:[UIGestureRecognizer class]]) {
+    return YES;
+  }
+
+  const char *name = class_getName(class);
+  if (strncmp(name, "UI", 2) == 0 || strncmp(name, "AV", 2) == 0 || strncmp(name, "CA", 2) == 0) {
+    return YES;
+  }
+
+  return NO;
+}
+
+Class _Nullable ASGetClassFromType(const char *type)
+{
+  // Class types all start with @"
+  if (strncmp(type, "@\"", 2) != 0) {
+    return nil;
+  }
+
+  // Ensure length >= 3
+  size_t typeLength = strlen(type);
+  if (typeLength < 3) {
+    ASDisplayNodeCFailAssert(@"Got invalid type-encoding: %s", type);
+    return nil;
+  }
+
+  // Copy type[2..(end-1)]. So @"UIImage" -> UIImage
+  size_t resultLength = typeLength - 3;
+  char className[resultLength + 1];
+  strncpy(className, type + 2, resultLength);
+  className[resultLength] = '\0';
+  return objc_getClass(className);
 }
 
 CGFloat ASScreenScale()
@@ -79,10 +137,20 @@ CGFloat ASScreenScale()
   return __scale;
 }
 
+CGSize ASFloorSizeValues(CGSize s)
+{
+  return CGSizeMake(ASFloorPixelValue(s.width), ASFloorPixelValue(s.height));
+}
+
 CGFloat ASFloorPixelValue(CGFloat f)
 {
   CGFloat scale = ASScreenScale();
   return floor(f * scale) / scale;
+}
+
+CGSize ASCeilSizeValues(CGSize s)
+{
+  return CGSizeMake(ASCeilPixelValue(s.width), ASCeilPixelValue(s.height));
 }
 
 CGFloat ASCeilPixelValue(CGFloat f)

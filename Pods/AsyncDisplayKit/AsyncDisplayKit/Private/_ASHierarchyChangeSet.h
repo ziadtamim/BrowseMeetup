@@ -12,6 +12,7 @@
 
 #import <Foundation/Foundation.h>
 #import <vector>
+#import "ASObjectDescriptionHelpers.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -58,7 +59,7 @@ BOOL ASHierarchyChangeTypeIsFinal(_ASHierarchyChangeType changeType);
 
 NSString *NSStringFromASHierarchyChangeType(_ASHierarchyChangeType changeType);
 
-@interface _ASHierarchySectionChange : NSObject
+@interface _ASHierarchySectionChange : NSObject <ASDescriptionProvider, ASDebugDescriptionProvider>
 
 // FIXME: Generalize this to `changeMetadata` dict?
 @property (nonatomic, readonly) ASDataControllerAnimationOptions animationOptions;
@@ -73,7 +74,7 @@ NSString *NSStringFromASHierarchyChangeType(_ASHierarchyChangeType changeType);
 - (_ASHierarchySectionChange *)changeByFinalizingType;
 @end
 
-@interface _ASHierarchyItemChange : NSObject
+@interface _ASHierarchyItemChange : NSObject <ASDescriptionProvider, ASDebugDescriptionProvider>
 @property (nonatomic, readonly) ASDataControllerAnimationOptions animationOptions;
 
 /// Index paths are sorted descending for changeType .Delete, ascending otherwise
@@ -81,7 +82,7 @@ NSString *NSStringFromASHierarchyChangeType(_ASHierarchyChangeType changeType);
 
 @property (nonatomic, readonly) _ASHierarchyChangeType changeType;
 
-+ (NSDictionary *)sectionToIndexSetMapFromChanges:(NSArray<_ASHierarchyItemChange *> *)changes ofType:(_ASHierarchyChangeType)changeType;
++ (NSDictionary *)sectionToIndexSetMapFromChanges:(NSArray<_ASHierarchyItemChange *> *)changes;
 
 /**
  * If this is a .OriginalInsert or .OriginalDelete change, this returns a copied change
@@ -90,9 +91,28 @@ NSString *NSStringFromASHierarchyChangeType(_ASHierarchyChangeType changeType);
 - (_ASHierarchyItemChange *)changeByFinalizingType;
 @end
 
-@interface _ASHierarchyChangeSet : NSObject
+@interface _ASHierarchyChangeSet : NSObject <ASDescriptionProvider, ASDebugDescriptionProvider>
 
 - (instancetype)initWithOldData:(std::vector<NSInteger>)oldItemCounts NS_DESIGNATED_INITIALIZER;
+
+
+/**
+ * The combined completion handler.
+ *
+ * @warning The completion block is discarded after reading because it may have captured
+ *   significant resources that we would like to reclaim as soon as possible.
+ */
+@property (nonatomic, copy, readonly, nullable) void(^completionHandler)(BOOL finished);
+
+/**
+ * Append the given completion handler to the combined @c completionHandler.
+ *
+ * @discussion Since batch updates can be nested, we have to support multiple
+ * completion handlers per update.
+ *
+ * @precondition The change set must not be completed.
+ */
+- (void)addCompletionHandler:(nullable void(^)(BOOL finished))completion;
 
 /// @precondition The change set must be completed.
 @property (nonatomic, strong, readonly) NSIndexSet *deletedSections;
@@ -103,7 +123,7 @@ NSString *NSStringFromASHierarchyChangeType(_ASHierarchyChangeType changeType);
  Get the section index after the update for the given section before the update.
  
  @precondition The change set must be completed.
- @returns The new section index, or NSNotFound if the given section was deleted.
+ @return The new section index, or NSNotFound if the given section was deleted.
  */
 - (NSUInteger)newSectionForOldSection:(NSUInteger)oldSection;
 

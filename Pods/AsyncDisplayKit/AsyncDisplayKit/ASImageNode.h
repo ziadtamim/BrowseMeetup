@@ -11,6 +11,7 @@
 #import <AsyncDisplayKit/ASControlNode.h>
 
 #import "ASImageProtocols.h"
+#import "ASBaseDefines.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @param image The image to be displayed.
  *
- * @returns A transformed image.
+ * @return A transformed image.
  */
 typedef UIImage * _Nullable (^asimagenode_modification_block_t)(UIImage *image);
 
@@ -61,6 +62,14 @@ typedef UIImage * _Nullable (^asimagenode_modification_block_t)(UIImage *image);
 @property (nonatomic, assign) BOOL forceUpscaling;
 
 /**
+ * @abstract Forces image to be rendered at forcedSize.
+ * @discussion Defaults to CGSizeZero to indicate that the forcedSize should not be used.
+ * Setting forcedSize to non-CGSizeZero will force the backing of the layer contents to 
+ * be forcedSize (automatically adjusted for contentsSize).
+ */
+@property (nonatomic, assign) CGSize forcedSize;
+
+/**
  * @abstract Enables or disables efficient cropping.
  * 
  * @param cropEnabled YES to efficiently crop the receiver's contents such that
@@ -83,7 +92,7 @@ typedef UIImage * _Nullable (^asimagenode_modification_block_t)(UIImage *image);
  *
  * @discussion This value defines a rectangle that is to be featured by the
  * receiver. The rectangle is specified as a "unit rectangle," using
- * percentages of the source image's width and height, e.g. CGRectMake(0.5, 0,
+ * fractions of the source image's width and height, e.g. CGRectMake(0.5, 0,
  * 0.5, 1.0) will feature the full right half a photo. If the cropRect is
  * empty, the content mode of the receiver will be used to determine its
  * dimensions, and only the cropRect's origin will be used for positioning. The
@@ -112,7 +121,7 @@ typedef UIImage * _Nullable (^asimagenode_modification_block_t)(UIImage *image);
  * `displaySuspended` is YES, `displayCompletionBlock` is will be
  * performed immediately and `YES` will be passed for `canceled`.
  */
-- (void)setNeedsDisplayWithCompletion:(void (^ _Nullable)(BOOL canceled))displayCompletionBlock;
+- (void)setNeedsDisplayWithCompletion:(nullable void (^)(BOOL canceled))displayCompletionBlock;
 
 #if TARGET_OS_TV
 /** 
@@ -154,6 +163,13 @@ typedef UIImage * _Nullable (^asimagenode_modification_block_t)(UIImage *image);
 
 @end
 
+@interface ASImageNode (Unavailable)
+
+- (instancetype)initWithLayerBlock:(ASDisplayNodeLayerBlock)viewBlock didLoadBlock:(nullable ASDisplayNodeDidLoadBlock)didLoadBlock AS_UNAVAILABLE();
+
+- (instancetype)initWithViewBlock:(ASDisplayNodeViewBlock)viewBlock didLoadBlock:(nullable ASDisplayNodeDidLoadBlock)didLoadBlock AS_UNAVAILABLE();
+
+@end
 
 ASDISPLAYNODE_EXTERN_C_BEGIN
 
@@ -165,7 +181,7 @@ ASDISPLAYNODE_EXTERN_C_BEGIN
  *
  * @see <imageModificationBlock>
  *
- * @returns An ASImageNode image modification block.
+ * @return An ASImageNode image modification block.
  */
 asimagenode_modification_block_t ASImageNodeRoundBorderModificationBlock(CGFloat borderWidth, UIColor * _Nullable borderColor);
 
@@ -177,7 +193,7 @@ asimagenode_modification_block_t ASImageNodeRoundBorderModificationBlock(CGFloat
  *
  * @see <imageModificationBlock>
  *
- * @returns An ASImageNode image modification block.
+ * @return An ASImageNode image modification block.
  */
 asimagenode_modification_block_t ASImageNodeTintColorModificationBlock(UIColor *color);
 

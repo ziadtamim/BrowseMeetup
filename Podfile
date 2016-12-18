@@ -6,5 +6,5 @@ target 'BrowseMeetup' do
   use_frameworks!
 
   # Pods for BrowseMeetup
-  pod 'AsyncDisplayKit', '~> 1.9'
+  pod 'AsyncDisplayKit', '>= 2.0'
 end

@@ -1,26 +1,32 @@
 PODS:
-  - AsyncDisplayKit (1.9.91):
-    - AsyncDisplayKit/PINRemoteImage (= 1.9.91)
-  - AsyncDisplayKit/ASDealloc2MainObject (1.9.91)
-  - AsyncDisplayKit/Core (1.9.91):
-    - AsyncDisplayKit/ASDealloc2MainObject
-  - AsyncDisplayKit/PINRemoteImage (1.9.91):
+  - AsyncDisplayKit (2.0):
+    - AsyncDisplayKit/PINRemoteImage (= 2.0)
+  - AsyncDisplayKit/Core (2.0)
+  - AsyncDisplayKit/PINRemoteImage (2.0):
     - AsyncDisplayKit/Core
-    - PINRemoteImage/iOS (= 3.0.0-beta.3)
-  - PINCache (3.0.1-beta)
-  - PINRemoteImage/Core (3.0.0-beta.3):
-    - PINCache (>= 3.0.0-beta)
-  - PINRemoteImage/iOS (3.0.0-beta.3):
+    - PINRemoteImage/iOS (= 3.0.0-beta.7)
+    - PINRemoteImage/PINCache
+  - PINCache (3.0.1-beta.2):
+    - PINCache/Arc-exception-safe (= 3.0.1-beta.2)
+    - PINCache/Core (= 3.0.1-beta.2)
+  - PINCache/Arc-exception-safe (3.0.1-beta.2):
+    - PINCache/Core
+  - PINCache/Core (3.0.1-beta.2)
+  - PINRemoteImage/Core (3.0.0-beta.7)
+  - PINRemoteImage/iOS (3.0.0-beta.7):
+    - PINRemoteImage/Core
+  - PINRemoteImage/PINCache (3.0.0-beta.7):
+    - PINCache (= 3.0.1-beta.2)
     - PINRemoteImage/Core
 
 DEPENDENCIES:
-  - AsyncDisplayKit (~> 1.9)
+  - AsyncDisplayKit (>= 2.0)
 
 SPEC CHECKSUMS:
-  AsyncDisplayKit: 96b6939ccc95d18ce1ac9bcaddecfba3f8b4f4af
-  PINCache: 6911fe422a633e18b3d3ddf2bd4f0e55e36e2892
-  PINRemoteImage: 308731aa6534500e58fc211b9cc2bb7252df25ba
+  AsyncDisplayKit: ed88de8d9fb404e098f4fdde9b8db50f23972f56
+  PINCache: 6d273a6e0754bd26e3f12a38a90dde73cc6a42b2
+  PINRemoteImage: ff63baf185088530db6cfa41cb665e2b5126b5c3
 
-PODFILE CHECKSUM: 8a971762f8f7aa4b81df69952a897a5640058823
+PODFILE CHECKSUM: 11180b879bf24ca9675a8bfd921c1219d8468774
 
 COCOAPODS: 1.1.1

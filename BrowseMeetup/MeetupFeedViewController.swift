@@ -8,7 +8,7 @@
 
 import AsyncDisplayKit
 
-final class MeetupFeedViewController: ASViewController<ASTableNode>,ASTableDelegate,ASTableViewDataSource,MeetupFeedInteractorOutput {
+final class MeetupFeedViewController: ASViewController<ASTableNode>,ASTableDelegate,ASTableDataSource,MeetupFeedInteractorOutput {
     
     var _activityIndicatorView: UIActivityIndicatorView!
     
@@ -94,7 +94,7 @@ final class MeetupFeedViewController: ASViewController<ASTableNode>,ASTableDeleg
             indexPaths.append(path)
         }
         
-        tableNode.view.insertRows(at: indexPaths, with: .none)
+        tableNode.insertRows(at: indexPaths, with: .none)
         _activityIndicatorView.stopAnimating()
     }
     

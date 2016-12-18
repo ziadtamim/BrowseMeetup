@@ -43,25 +43,21 @@ final class GroupCellNode: ASCellNode {
         _photoImageView = ASNetworkImageNode()
         _photoImageView?.url = group.photoUrl
         
-        addSubnode(_organizerAvatarImageView)
-        addSubnode(_organizerNameLabel)
-        addSubnode(_locationLabel)
-        addSubnode(_timeIntervalSincePostLabel)
-        addSubnode(_photoImageView)
+        automaticallyManagesSubnodes = true
     }
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         
-        _locationLabel.flexShrink = true
-        _organizerNameLabel.flexShrink = true
+        _locationLabel.style.flexShrink = 1.0
+        _organizerNameLabel.style.flexShrink = 1.0
         
         let headerSubStack = ASStackLayoutSpec.vertical()
-        headerSubStack.setChildren([_organizerNameLabel, _locationLabel])
+        headerSubStack.children = [_organizerNameLabel, _locationLabel]
     
-        _organizerAvatarImageView.preferredFrameSize = CGSize(width: OrganizerImageSize, height: OrganizerImageSize)
+        _organizerAvatarImageView.style.preferredSize = CGSize(width: OrganizerImageSize, height: OrganizerImageSize)
         
         let spacer = ASLayoutSpec()
-        spacer.flexGrow = true
+        spacer.style.flexGrow = 1.0
         
         let avatarInsets = UIEdgeInsets(top: HorizontalBuffer, left: 0, bottom: HorizontalBuffer, right: HorizontalBuffer)
         let avatarInset = ASInsetLayoutSpec(insets: avatarInsets, child: _organizerAvatarImageView)
@@ -69,19 +65,19 @@ final class GroupCellNode: ASCellNode {
         let headerStack = ASStackLayoutSpec.horizontal()
         headerStack.alignItems = ASStackLayoutAlignItems.center
         headerStack.justifyContent = ASStackLayoutJustifyContent.start
-        headerStack.setChildren([avatarInset, headerSubStack, spacer, _timeIntervalSincePostLabel])
+        headerStack.children = [avatarInset, headerSubStack, spacer, _timeIntervalSincePostLabel]
         
         let headerInsets = UIEdgeInsets(top: 0, left: HorizontalBuffer, bottom: 0, right: HorizontalBuffer)
         let headerWithInset = ASInsetLayoutSpec(insets: headerInsets, child: headerStack)
         
         let cellWidth = constrainedSize.max.width
         
-        _photoImageView.preferredFrameSize = CGSize(width: cellWidth, height: cellWidth)
-        let photoImageViewStatic = ASStaticLayoutSpec(children: [_photoImageView])
+        _photoImageView.style.preferredSize = CGSize(width: cellWidth, height: cellWidth)
+        let photoImageViewAbsolute = ASAbsoluteLayoutSpec(children: [_photoImageView]) //ASStaticLayoutSpec(children: [_photoImageView])
         
         let verticalStack = ASStackLayoutSpec.vertical()
         verticalStack.alignItems = ASStackLayoutAlignItems.stretch
-        verticalStack.setChildren([headerWithInset, photoImageViewStatic])
+        verticalStack.children = [headerWithInset, photoImageViewAbsolute]
         
         return verticalStack
     }
@@ -93,7 +89,7 @@ final class GroupCellNode: ASCellNode {
     fileprivate func createLayerBackedTextNode(attributedString: NSAttributedString) -> ASTextNode {
         let textNode = ASTextNode()
         textNode.isLayerBacked = true
-        textNode.attributedString = attributedString
+        textNode.attributedText = attributedString
         
         return textNode
     }

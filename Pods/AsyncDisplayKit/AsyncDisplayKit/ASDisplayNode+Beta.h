@@ -8,8 +8,9 @@
 //  of patent rights can be found in the PATENTS file in the same directory.
 //
 
-#import "ASContextTransitioning.h"
+#import "ASDisplayNode.h"
 #import "ASLayoutRangeType.h"
+#import "ASEventLog.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -18,10 +19,34 @@ void ASPerformBlockOnMainThread(void (^block)());
 void ASPerformBlockOnBackgroundThread(void (^block)()); // DISPATCH_QUEUE_PRIORITY_DEFAULT
 ASDISPLAYNODE_EXTERN_C_END
 
-@interface ASDisplayNode (Beta)
+#if ASEVENTLOG_ENABLE
+#define ASDisplayNodeLogEvent(node, ...) [node.eventLog logEventWithBacktrace:(AS_SAVE_EVENT_BACKTRACES ? [NSThread callStackSymbols] : nil) format:__VA_ARGS__]
+#else
+#define ASDisplayNodeLogEvent(node, ...)
+#endif
 
-+ (BOOL)usesImplicitHierarchyManagement;
-+ (void)setUsesImplicitHierarchyManagement:(BOOL)enabled;
+#if ASEVENTLOG_ENABLE
+#define ASDisplayNodeGetEventLog(node) node.eventLog
+#else
+#define ASDisplayNodeGetEventLog(node) nil
+#endif
+
+/**
+ * Bitmask to indicate what performance measurements the cell should record.
+ */
+typedef NS_OPTIONS(NSUInteger, ASDisplayNodePerformanceMeasurementOptions) {
+  ASDisplayNodePerformanceMeasurementOptionLayoutSpec = 1 << 0,
+  ASDisplayNodePerformanceMeasurementOptionLayoutComputation = 1 << 1
+};
+
+typedef struct {
+  CFTimeInterval layoutSpecTotalTime;
+  NSInteger layoutSpecNumberOfPasses;
+  CFTimeInterval layoutComputationTotalTime;
+  NSInteger layoutComputationNumberOfPasses;
+} ASDisplayNodePerformanceMeasurements;
+
+@interface ASDisplayNode (Beta)
 
 /**
  * ASTableView and ASCollectionView now throw exceptions on invalid updates
@@ -31,14 +56,10 @@ ASDISPLAYNODE_EXTERN_C_END
  * Note that even if AsyncDisplayKit's exception is suppressed, the app may still crash
  * as it proceeds with an invalid update.
  *
- * This currently defaults to YES. In a future release it will default to NO and later
- * be removed entirely.
+ * This property defaults to NO. It will be removed in a future release.
  */
-+ (BOOL)suppressesInvalidCollectionUpdateExceptions;
-+ (void)setSuppressesInvalidCollectionUpdateExceptions:(BOOL)suppresses;
-
-/** @name Layout */
-
++ (BOOL)suppressesInvalidCollectionUpdateExceptions AS_WARN_UNUSED_RESULT ASDISPLAYNODE_DEPRECATED_MSG("Collection update exceptions are thrown if assertions are enabled.");
++ (void)setSuppressesInvalidCollectionUpdateExceptions:(BOOL)suppresses ASDISPLAYNODE_DEPRECATED_MSG("Collection update exceptions are thrown if assertions are enabled.");;
 
 /**
  * @abstract Recursively ensures node and all subnodes are displayed.
@@ -61,66 +82,28 @@ ASDISPLAYNODE_EXTERN_C_END
  */
 @property (nonatomic, copy, nullable) ASDisplayNodeContextModifier didDisplayNodeContentWithRenderingContext;
 
-/** @name Layout Transitioning */
-
-@property (nonatomic) BOOL usesImplicitHierarchyManagement;
+/**
+ * @abstract A bitmask representing which actions (layout spec, layout generation) should be measured.
+ */
+@property (nonatomic, assign) ASDisplayNodePerformanceMeasurementOptions measurementOptions;
 
 /**
- * @discussion A place to perform your animation. New nodes have been inserted here. You can also use this time to re-order the hierarchy.
+ * @abstract A simple struct representing performance measurements collected.
  */
-- (void)animateLayoutTransition:(id<ASContextTransitioning>)context;
+@property (nonatomic, assign, readonly) ASDisplayNodePerformanceMeasurements performanceMeasurements;
 
-/**
- * @discussion A place to clean up your nodes after the transition
+#if ASEVENTLOG_ENABLE
+/*
+ * @abstract The primitive event tracing object. You shouldn't directly use it to log event. Use the ASDisplayNodeLogEvent macro instead.
  */
-- (void)didCompleteLayoutTransition:(id<ASContextTransitioning>)context;
-
-/**
- * @abstract Transitions the current layout with a new constrained size. Must be called on main thread.
- *
- * @param animated Animation is optional, but will still proceed through your `animateLayoutTransition` implementation with `isAnimated == NO`.
- *
- * @param shouldMeasureAsync Measure the layout asynchronously.
- *
- * @param measurementCompletion Optional completion block called only if a new layout is calculated.
- * It is called on main, right after the measurement and before -animateLayoutTransition:.
- *
- * @discussion If the passed constrainedSize is the the same as the node's current constrained size, this method is noop.
- *
- * @see animateLayoutTransition:
- */
-- (void)transitionLayoutWithSizeRange:(ASSizeRange)constrainedSize
-                             animated:(BOOL)animated
-                   shouldMeasureAsync:(BOOL)shouldMeasureAsync
-                measurementCompletion:(nullable void(^)())completion;
-
-/**
- * @abstract Invalidates the current layout and begins a relayout of the node with the current `constrainedSize`. Must be called on main thread.
- *
- * @param animated Animation is optional, but will still proceed through your `animateLayoutTransition` implementation with `isAnimated == NO`.
- *
- * @param shouldMeasureAsync Measure the layout asynchronously.
- *
- * @param measurementCompletion Optional completion block called only if a new layout is calculated.
- * It is called right after the measurement and before -animateLayoutTransition:.
- *
- * @see animateLayoutTransition:
- */
-- (void)transitionLayoutWithAnimation:(BOOL)animated
-                   shouldMeasureAsync:(BOOL)shouldMeasureAsync
-                measurementCompletion:(nullable void(^)())completion;
-
+@property (nonatomic, strong, readonly) ASEventLog *eventLog;
+#endif
 
 /**
  * @abstract Currently used by ASNetworkImageNode and ASMultiplexImageNode to allow their placeholders to stay if they are loading an image from the network.
  * Otherwise, a display pass is scheduled and completes, but does not actually draw anything - and ASDisplayNode considers the element finished.
  */
-- (BOOL)placeholderShouldPersist;
-
-/**
- * @abstract Cancels all performing layout transitions. Can be called on any thread.
- */
-- (void)cancelLayoutTransitionsInProgress;
+- (BOOL)placeholderShouldPersist AS_WARN_UNUSED_RESULT;
 
 /**
  * @abstract Indicates that the receiver and all subnodes have finished displaying. May be called more than once, for example if the receiver has
@@ -139,6 +122,28 @@ ASDISPLAYNODE_EXTERN_C_END
  * enabling .neverShowPlaceholders on ASCellNodes so that the navigation operation is blocked on redisplay completing, etc.
  */
 + (void)setRangeModeForMemoryWarnings:(ASLayoutRangeMode)rangeMode;
+
+/**
+ * @abstract Whether to draw all descendant nodes' layers/views into this node's layer/view's backing store.
+ *
+ * @discussion
+ * When set to YES, causes all descendant nodes' layers/views to be drawn directly into this node's layer/view's backing
+ * store.  Defaults to NO.
+ *
+ * If a node's descendants are static (never animated or never change attributes after creation) then that node is a
+ * good candidate for rasterization.  Rasterizing descendants has two main benefits:
+ * 1) Backing stores for descendant layers are not created.  Instead the layers are drawn directly into the rasterized
+ * container.  This can save a great deal of memory.
+ * 2) Since the entire subtree is drawn into one backing store, compositing and blending are eliminated in that subtree
+ * which can help improve animation/scrolling/etc performance.
+ *
+ * Rasterization does not currently support descendants with transform, sublayerTransform, or alpha. Those properties
+ * will be ignored when rasterizing descendants.
+ *
+ * Note: this has nothing to do with -[CALayer shouldRasterize], which doesn't work with ASDisplayNode's asynchronous
+ * rendering model.
+ */
+@property (nonatomic, assign) BOOL shouldRasterizeDescendants;
 
 @end
 
