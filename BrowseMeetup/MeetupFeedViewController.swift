@@ -20,7 +20,6 @@ final class MeetupFeedViewController: ASViewController<ASTableNode>,MeetupFeedIn
     ///--------------------------------------
     
     init() {
-        
         _tableNode = ASTableNode()
         super.init(node: _tableNode)
         setupInitialState()

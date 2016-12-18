@@ -15,8 +15,6 @@ fileprivate let HorizontalBuffer: CGFloat = 10
 
 final class GroupCellNode: ASCellNode {
     
-    fileprivate var _group: Group?
-    
     fileprivate var _organizerAvatarImageView: ASNetworkImageNode!
     fileprivate var _organizerNameLabel: ASTextNode!
     fileprivate var _locationLabel: ASTextNode!
@@ -26,7 +24,6 @@ final class GroupCellNode: ASCellNode {
     
     init(group: Group) {
         super.init()
-        _group = group
         
         _organizerAvatarImageView = ASNetworkImageNode()
         _organizerAvatarImageView.cornerRadius = OrganizerImageSize/2
