@@ -18,7 +18,4 @@ extension String {
         
         return attributedString
     }
-    
-    
-    
 }

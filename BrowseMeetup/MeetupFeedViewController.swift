@@ -10,9 +10,9 @@ import AsyncDisplayKit
 
 final class MeetupFeedViewController: ASViewController<ASTableNode>,MeetupFeedInteractorOutput {
     
-    var _activityIndicatorView: UIActivityIndicatorView!
-    var dataProvider: MeetupFeedTableDataProvider!
     var handler: MeetupFeedInteractorInput?
+    var _activityIndicatorView: UIActivityIndicatorView!
+    var _dataProvider: MeetupFeedTableDataProvider!
     var _tableNode: ASTableNode
     
     ///--------------------------------------
@@ -56,7 +56,7 @@ final class MeetupFeedViewController: ASViewController<ASTableNode>,MeetupFeedIn
     func foundGroupItems(_ groups: [Group]?, error: Error?) {
         guard error == nil else { return }
         
-        dataProvider.insertNewGroupsInTableView(groups!)
+        _dataProvider.insertNewGroupsInTableView(groups!)
         _activityIndicatorView.stopAnimating()
     }
     
@@ -67,8 +67,8 @@ final class MeetupFeedViewController: ASViewController<ASTableNode>,MeetupFeedIn
     func setupInitialState() {
         title = "Browse Meetup"
         
-        dataProvider = MeetupFeedTableDataProvider()
-        dataProvider._tableNode = _tableNode
-        _tableNode.dataSource = dataProvider
+        _dataProvider = MeetupFeedTableDataProvider()
+        _dataProvider._tableNode = _tableNode
+        _tableNode.dataSource = _dataProvider
     }
 }
