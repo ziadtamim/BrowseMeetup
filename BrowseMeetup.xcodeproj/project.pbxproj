@@ -12,18 +12,6 @@
 		E757AE0C1DAFCC3E008979DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E757AE0B1DAFCC3E008979DF /* Assets.xcassets */; };
 		E757AE0F1DAFCC3E008979DF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E757AE0D1DAFCC3E008979DF /* LaunchScreen.storyboard */; };
 		E757AE1A1DAFCDD2008979DF /* MeetupFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E757AE191DAFCDD2008979DF /* MeetupFeedViewController.swift */; };
-		E79B3FCB1E06FB46006F7456 /* MeetupFeedTableDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79B3FCA1E06FB46006F7456 /* MeetupFeedTableDataProvider.swift */; };
-		E7B1F42F1DBCDAD100F8D731 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B1F42E1DBCDAD100F8D731 /* Group.swift */; };
-		E7B1F4311DBCDB0F00F8D731 /* Organizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B1F4301DBCDB0F00F8D731 /* Organizer.swift */; };
-		E7B1F4331DBCDBFF00F8D731 /* GroupCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B1F4321DBCDBFF00F8D731 /* GroupCellNode.swift */; };
-		E7B1F4361DBCE4CC00F8D731 /* NSAttributedString+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B1F4351DBCE4CC00F8D731 /* NSAttributedString+Additions.swift */; };
-		E7B1F4391DBD5D2F00F8D731 /* MeetupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B1F4381DBD5D2F00F8D731 /* MeetupService.swift */; };
-		E7B1F43B1DBD721300F8D731 /* MeetupFeedInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B1F43A1DBD721300F8D731 /* MeetupFeedInteractor.swift */; };
-		E7B1F43D1DBD722600F8D731 /* MeetupFeedDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B1F43C1DBD722600F8D731 /* MeetupFeedDataManager.swift */; };
-		E7B1F4431DBD7DC800F8D731 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B1F4421DBD7DC800F8D731 /* LocationService.swift */; };
-		E7B1F4451DBD7F7800F8D731 /* MeetupFeedInteractorIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B1F4441DBD7F7800F8D731 /* MeetupFeedInteractorIO.swift */; };
-		E7B1F4471DBD84EB00F8D731 /* ApplicationConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B1F4461DBD84EB00F8D731 /* ApplicationConfigurator.swift */; };
-		E7B1F4491DBD8C6E00F8D731 /* DateFormatter+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B1F4481DBD8C6E00F8D731 /* DateFormatter+Additions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,18 +24,6 @@
 		E757AE0E1DAFCC3E008979DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E757AE101DAFCC3E008979DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E757AE191DAFCDD2008979DF /* MeetupFeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetupFeedViewController.swift; sourceTree = "<group>"; };
-		E79B3FCA1E06FB46006F7456 /* MeetupFeedTableDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetupFeedTableDataProvider.swift; sourceTree = "<group>"; };
-		E7B1F42E1DBCDAD100F8D731 /* Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
-		E7B1F4301DBCDB0F00F8D731 /* Organizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Organizer.swift; sourceTree = "<group>"; };
-		E7B1F4321DBCDBFF00F8D731 /* GroupCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupCellNode.swift; sourceTree = "<group>"; };
-		E7B1F4351DBCE4CC00F8D731 /* NSAttributedString+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Additions.swift"; sourceTree = "<group>"; };
-		E7B1F4381DBD5D2F00F8D731 /* MeetupService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetupService.swift; sourceTree = "<group>"; };
-		E7B1F43A1DBD721300F8D731 /* MeetupFeedInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetupFeedInteractor.swift; sourceTree = "<group>"; };
-		E7B1F43C1DBD722600F8D731 /* MeetupFeedDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetupFeedDataManager.swift; sourceTree = "<group>"; };
-		E7B1F4421DBD7DC800F8D731 /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
-		E7B1F4441DBD7F7800F8D731 /* MeetupFeedInteractorIO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetupFeedInteractorIO.swift; sourceTree = "<group>"; };
-		E7B1F4461DBD84EB00F8D731 /* ApplicationConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationConfigurator.swift; sourceTree = "<group>"; };
-		E7B1F4481DBD8C6E00F8D731 /* DateFormatter+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Additions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,11 +77,7 @@
 			isa = PBXGroup;
 			children = (
 				E757AE041DAFCC3E008979DF /* AppDelegate.swift */,
-				E7B1F4461DBD84EB00F8D731 /* ApplicationConfigurator.swift */,
-				E79B3FC51E06FA93006F7456 /* Helpers */,
-				E79B3FC61E06FAA7006F7456 /* Services */,
 				E79B3FC91E06FAD8006F7456 /* Module */,
-				E79B3FC41E06FA69006F7456 /* Model */,
 				E757AE0B1DAFCC3E008979DF /* Assets.xcassets */,
 				E757AE0D1DAFCC3E008979DF /* LaunchScreen.storyboard */,
 				E757AE101DAFCC3E008979DF /* Info.plist */,
@@ -113,42 +85,10 @@
 			path = BrowseMeetup;
 			sourceTree = "<group>";
 		};
-		E79B3FC41E06FA69006F7456 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				E7B1F42E1DBCDAD100F8D731 /* Group.swift */,
-				E7B1F4301DBCDB0F00F8D731 /* Organizer.swift */,
-			);
-			name = Model;
-			sourceTree = "<group>";
-		};
-		E79B3FC51E06FA93006F7456 /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-				E7B1F4351DBCE4CC00F8D731 /* NSAttributedString+Additions.swift */,
-				E7B1F4481DBD8C6E00F8D731 /* DateFormatter+Additions.swift */,
-			);
-			name = Helpers;
-			sourceTree = "<group>";
-		};
-		E79B3FC61E06FAA7006F7456 /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				E7B1F4381DBD5D2F00F8D731 /* MeetupService.swift */,
-				E7B1F4421DBD7DC800F8D731 /* LocationService.swift */,
-			);
-			name = Services;
-			sourceTree = "<group>";
-		};
 		E79B3FC91E06FAD8006F7456 /* Module */ = {
 			isa = PBXGroup;
 			children = (
-				E7B1F43A1DBD721300F8D731 /* MeetupFeedInteractor.swift */,
-				E7B1F43C1DBD722600F8D731 /* MeetupFeedDataManager.swift */,
-				E7B1F4441DBD7F7800F8D731 /* MeetupFeedInteractorIO.swift */,
-				E79B3FCA1E06FB46006F7456 /* MeetupFeedTableDataProvider.swift */,
 				E757AE191DAFCDD2008979DF /* MeetupFeedViewController.swift */,
-				E7B1F4321DBCDBFF00F8D731 /* GroupCellNode.swift */,
 			);
 			name = Module;
 			sourceTree = "<group>";
@@ -276,20 +216,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E7B1F42F1DBCDAD100F8D731 /* Group.swift in Sources */,
 				E757AE1A1DAFCDD2008979DF /* MeetupFeedViewController.swift in Sources */,
-				E7B1F43D1DBD722600F8D731 /* MeetupFeedDataManager.swift in Sources */,
-				E7B1F4471DBD84EB00F8D731 /* ApplicationConfigurator.swift in Sources */,
-				E7B1F4331DBCDBFF00F8D731 /* GroupCellNode.swift in Sources */,
-				E7B1F4451DBD7F7800F8D731 /* MeetupFeedInteractorIO.swift in Sources */,
-				E7B1F4361DBCE4CC00F8D731 /* NSAttributedString+Additions.swift in Sources */,
-				E7B1F43B1DBD721300F8D731 /* MeetupFeedInteractor.swift in Sources */,
-				E7B1F4391DBD5D2F00F8D731 /* MeetupService.swift in Sources */,
 				E757AE051DAFCC3E008979DF /* AppDelegate.swift in Sources */,
-				E7B1F4431DBD7DC800F8D731 /* LocationService.swift in Sources */,
-				E79B3FCB1E06FB46006F7456 /* MeetupFeedTableDataProvider.swift in Sources */,
-				E7B1F4491DBD8C6E00F8D731 /* DateFormatter+Additions.swift in Sources */,
-				E7B1F4311DBCDB0F00F8D731 /* Organizer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
