@@ -13,6 +13,7 @@
 		E757AE0F1DAFCC3E008979DF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E757AE0D1DAFCC3E008979DF /* LaunchScreen.storyboard */; };
 		E757AE1A1DAFCDD2008979DF /* MeetupFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E757AE191DAFCDD2008979DF /* MeetupFeedViewController.swift */; };
 		E79B3FCB1E06FB46006F7456 /* MeetupFeedTableDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79B3FCA1E06FB46006F7456 /* MeetupFeedTableDataProvider.swift */; };
+		E79B3FCE1E076EE3006F7456 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79B3FCD1E076EE3006F7456 /* Config.swift */; };
 		E7B1F42F1DBCDAD100F8D731 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B1F42E1DBCDAD100F8D731 /* Group.swift */; };
 		E7B1F4311DBCDB0F00F8D731 /* Organizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B1F4301DBCDB0F00F8D731 /* Organizer.swift */; };
 		E7B1F4331DBCDBFF00F8D731 /* GroupCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B1F4321DBCDBFF00F8D731 /* GroupCellNode.swift */; };
@@ -37,6 +38,7 @@
 		E757AE101DAFCC3E008979DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E757AE191DAFCDD2008979DF /* MeetupFeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetupFeedViewController.swift; sourceTree = "<group>"; };
 		E79B3FCA1E06FB46006F7456 /* MeetupFeedTableDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetupFeedTableDataProvider.swift; sourceTree = "<group>"; };
+		E79B3FCD1E076EE3006F7456 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		E7B1F42E1DBCDAD100F8D731 /* Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		E7B1F4301DBCDB0F00F8D731 /* Organizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Organizer.swift; sourceTree = "<group>"; };
 		E7B1F4321DBCDBFF00F8D731 /* GroupCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupCellNode.swift; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 			children = (
 				E757AE041DAFCC3E008979DF /* AppDelegate.swift */,
 				E7B1F4461DBD84EB00F8D731 /* ApplicationConfigurator.swift */,
+				E79B3FCC1E076E77006F7456 /* Constants */,
 				E79B3FC51E06FA93006F7456 /* Helpers */,
 				E79B3FC61E06FAA7006F7456 /* Services */,
 				E79B3FC91E06FAD8006F7456 /* Module */,
@@ -143,14 +146,22 @@
 		E79B3FC91E06FAD8006F7456 /* Module */ = {
 			isa = PBXGroup;
 			children = (
-				E7B1F43A1DBD721300F8D731 /* MeetupFeedInteractor.swift */,
 				E7B1F43C1DBD722600F8D731 /* MeetupFeedDataManager.swift */,
+				E7B1F43A1DBD721300F8D731 /* MeetupFeedInteractor.swift */,
 				E7B1F4441DBD7F7800F8D731 /* MeetupFeedInteractorIO.swift */,
 				E79B3FCA1E06FB46006F7456 /* MeetupFeedTableDataProvider.swift */,
 				E757AE191DAFCDD2008979DF /* MeetupFeedViewController.swift */,
 				E7B1F4321DBCDBFF00F8D731 /* GroupCellNode.swift */,
 			);
 			name = Module;
+			sourceTree = "<group>";
+		};
+		E79B3FCC1E076E77006F7456 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				E79B3FCD1E076EE3006F7456 /* Config.swift */,
+			);
+			name = Constants;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -278,6 +289,7 @@
 			files = (
 				E7B1F42F1DBCDAD100F8D731 /* Group.swift in Sources */,
 				E757AE1A1DAFCDD2008979DF /* MeetupFeedViewController.swift in Sources */,
+				E79B3FCE1E076EE3006F7456 /* Config.swift in Sources */,
 				E7B1F43D1DBD722600F8D731 /* MeetupFeedDataManager.swift in Sources */,
 				E7B1F4471DBD84EB00F8D731 /* ApplicationConfigurator.swift in Sources */,
 				E7B1F4331DBCDBFF00F8D731 /* GroupCellNode.swift in Sources */,

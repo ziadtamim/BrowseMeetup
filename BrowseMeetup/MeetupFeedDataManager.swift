@@ -37,7 +37,7 @@ extension MeetupFeedDataManager {
             return nil
         }
         
-        return Group(created: created, photoUrl: URL(string: photoUrl), city: city, country: country, organizer: organizer)
+        return Group(createdAt: created, photoUrl: URL(string: photoUrl), city: city, country: country, organizer: organizer)
     }
     
     func organizerItemFromJSONDictionary(_ entry: JSONDictionary) -> Organizer? {

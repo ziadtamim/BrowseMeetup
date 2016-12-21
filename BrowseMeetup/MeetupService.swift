@@ -8,21 +8,20 @@
 
 import Foundation
 
-fileprivate let MeetupApiKey = "1f5718c16a7fb3a5452f45193232"
-
 typealias JSONDictionary = Dictionary<String,Any>
 
 final class MeetupService {
     
-    let baseUrl: String = "https://api.meetup.com/"
+    var baseUrl: String = "https://api.meetup.com/"
+    lazy var session: URLSession = URLSession.shared
     
     func fetchMeetupGroupInLocation(latitude: Double, longitude: Double, completion: @escaping (_ results: [JSONDictionary]?, _ error: Error?) -> ()) {
-        let url = URL(string: "\(baseUrl)find/groups?&lat=\(latitude)&lon=\(longitude)&page=10&key=\(MeetupApiKey)")!
+        guard let url = URL(string: "\(baseUrl)find/groups?&lat=\(latitude)&lon=\(longitude)&page=10&key=\(MeetupApiKey)") else {
+            fatalError()
+        }
         
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
+        session.dataTask(with: url) { (data, response, error) in
             DispatchQueue.main.async(execute: {
-                guard error == nil else { completion(nil, error); return }
-                
                 do {
                     let results = try JSONSerialization.jsonObject(with: data!) as? [JSONDictionary]
                     completion(results, nil);
@@ -31,7 +30,6 @@ final class MeetupService {
                     completion(nil, underlyingError);
                 }
             })
-            
         }.resume()
     }
 }

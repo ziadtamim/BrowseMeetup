@@ -25,6 +25,7 @@ final class GroupCellNode: ASCellNode {
     init(group: Group) {
         super.init()
         
+        
         _organizerAvatarImageView = ASNetworkImageNode()
         _organizerAvatarImageView.cornerRadius = OrganizerImageSize/2
         _organizerAvatarImageView.clipsToBounds = true

@@ -9,18 +9,17 @@
 import Foundation
 
 struct Group {
-    let created: Double!
+    let createdAt: Double!
     let photoUrl: URL!
     let city: String!
     let country: String!
     let organizer: Organizer!
-    
     
     var location: String {
         return "\(city!), \(country!)"
     }
     
     var timeInterval: String {
-        return DateFormatter.dateWithNoTimeFromTimeInterval(created)
+        return DateFormatter.dateWithNoTimeFromTimeInterval(createdAt)
     }
 }

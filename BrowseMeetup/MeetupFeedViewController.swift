@@ -35,9 +35,8 @@ final class MeetupFeedViewController: ASViewController<ASTableNode>,MeetupFeedIn
         _activityIndicatorView.hidesWhenStopped = true
         _activityIndicatorView.sizeToFit()
         
-        let boundSize = view.bounds.size
         var refreshRect = _activityIndicatorView.frame
-        refreshRect.origin = CGPoint(x: (boundSize.width - _activityIndicatorView.frame.width) / 2.0, y: _activityIndicatorView.frame.midY)
+        refreshRect.origin = CGPoint(x: (view.bounds.size.width - _activityIndicatorView.frame.width) / 2.0, y: _activityIndicatorView.frame.midY)
         
         _activityIndicatorView.frame = refreshRect
         view.addSubview(_activityIndicatorView)
